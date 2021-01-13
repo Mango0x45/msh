@@ -89,6 +89,7 @@ static int msh_execute(char **args, const unsigned int nelems)
     if (args[0] == NULL)
         return 1;
 
+    /* Run builtin instead of process */
     for (int i = 0; i < msh_num_builtins(); i++)
         if (strcmp(args[0], builtin_str[i]) == 0)
             return (*builtin_func[i])(args);
@@ -96,12 +97,16 @@ static int msh_execute(char **args, const unsigned int nelems)
     /* -1 because we cant redirect if the last arg is the redirection */
     int fd = STDOUT_FILENO;
     for (unsigned int i = 0; i < nelems - 1; i++) {
-        if (strcmp(args[i], ">") == 0) {
+        if (strcmp(args[i], ">") == 0)
             fd = creat(args[i + 1], 0777);
-            if (fd == -1)
-                return msh_error();
-            args[i] = '\0';
-        }
+        else if (strcmp(args[i], ">>") == 0)
+            fd = open(args[i + 1], O_CREAT | O_WRONLY | O_APPEND, 0777);
+        else
+            continue;
+
+        if (fd == -1)
+            return msh_error();
+        args[i] = '\0';
     }
 
     return msh_launcher(args, fd);
