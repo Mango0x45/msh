@@ -1,0 +1,24 @@
+                                             _     
+                             _ __ ___   ___ | |__  
+                            | '_ ` _ \ / __|| '_ \ 
+                            | | | | | |\__ \| | | |
+                            |_| |_| |_||___/|_| |_|
+                                                   
+Overview
+========
+msh (Mango Shell) is my attempt at making a command shell. It's based off of the extremely simplistic "lsh", but with more stuff added in.
+
+
+Current Features
+================
+Run commands
+Builtins
+File redirection
+Different prompts for root and non-root users (# and $)
+
+
+Current Builtins
+================
+cd
+exit
+help
