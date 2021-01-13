@@ -17,7 +17,7 @@ int msh_cd(char **args)
     if (args[1] == NULL)
         fputs("msh: expected arguement to 'cd'", stderr);
     else if (chdir(args[1]) == -1)
-        perror("lsh");
+        perror("msh");
 
     return 1;
 }
